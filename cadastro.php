@@ -12,12 +12,33 @@
 
 
 <?php 
-  $email = $_GET['email'];
-  $password = $_GET['password'];
-  $username = $_GET['username'];
+  $email = $_post['email'];
+  $telefone = $_post['tel'];
+  $name = $_post['username'];
  
-  echo ' O nome é ' . $username . ' e seu email é ' . $email . ' a senha é ' . $password;
+  echo 'Contato cadastrado nome é ' . $name  . ' e seu email é ' . $email . ' o seu número de telefone é ' . $telefone;
+ 
 
+  //echo `Olá $nome. Seu email é $email`;
+
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+
+  try {
+    $conn = new PDO("mysql:host=$servername;dbname=Agenda", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "<br> Connectado com sucesso!";
+
+    $sql = "INSERT INTO Contatos(nome,telefone,email) VALUES 
+              ('$name','$telefone','$email')";
+
+    $conn->exec($sql);
+
+  } catch (PDOException $e) {
+    echo "Conexão falhou: " . $e->getMessage();
+  }
 
 
 ?>

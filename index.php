@@ -7,10 +7,36 @@
             <ol class="max-w-md space-y-1 text-gray-500 list-decimal list-inside dark:text-gray-400">
         </div>
 
-
+        
 
         <?php
+        $nome = $_POST['nome'];
+        $telefone = $_POST['telefone'];
+        $email = $_POST['email'];
 
+        echo "Olá " . $nome . " .Seu e-mail é " . $email;
+
+        //echo `Olá $nome. Seu email é $email`;
+        
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=Agenda", $username, $password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            echo "<br> Connectado com sucesso successfully";
+
+            $sql = "INSERT INTO Contatos(nome,telefone,email) VALUES 
+            ('$nome','$telefone','$email')";
+
+            $conn->exec($sql);
+
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+        
         $names = array("Ana Claúdia", "Diego Kelme", "Vitória Kétura", "Marlon");
 
         $ages = array("17", "17", "16", "41");
